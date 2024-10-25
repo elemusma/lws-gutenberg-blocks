@@ -7,3 +7,29 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+.wp-block-create-block-content-features .col-inner {
+  transition: all 0.25s ease-in-out;
+}
+.wp-block-create-block-content-features .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  top: 0;
+  right: 0;
+  opacity: 1;
+  transition: all 0.25s ease-in-out;
+  z-index: 1;
+}
+.wp-block-create-block-content-features img {
+  transition: all 0.25s ease-in-out;
+}
+.wp-block-create-block-content-features .col:hover .col-inner {
+  background: var(--accent-primary);
+}
+.wp-block-create-block-content-features .col:hover .overlay {
+  opacity: 0;
+}
+.wp-block-create-block-content-features .col:hover img {
+  transform: scale(1.1);
+}

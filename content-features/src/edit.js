@@ -65,40 +65,94 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const [ value, setValue ] = useState( '' );
 
+	const createNewColumn = () => ({
+		col_class: 'col col-lg-4 col-md-6 col-12 bg-black text-white',
+		col_style: 'padding:0px;',
+		col_id: '',
+		col_inner_class: 'col-inner d-flex align-items-center justify-content-md-center',
+		col_inner_style: 'padding-top:15px;',
+		data_aos: 'fade-up',
+		data_aos_delay: '',
+		title: '',
+		title_class: 'bold',
+		title_style: '',
+		content: '',
+		code_block: '',
+		col_img_class: 'position-relative overflow-h',
+		col_img_style: 'border-top:4px solid white;border-right:2px solid white;',
+		img: '',
+		img_class: 'w-100',
+		img_style: 'height:200px;object-fit:cover;margin-bottom:-5px;',
+	});
+
 	const addFeature = () => {
 		setAttributes( {
 			features: [
 				...features,
-				{
-					col_class: '',
-					col_style: '',
-					col_id: '',
-					col_inner_class: 'd-flex align-items-center justify-content-md-center',
-					col_inner_style: '',
-					data_aos: 'fade-up',
-					data_aos_delay: '',
-					title: '',
-					title_class: 'bold',
-					title_style: '',
-					content: '',
-					code_block: ''
-				},
+				createNewColumn(),
 			],
 		} );
 	};
+	// const addFeature = () => {
+	// 	setAttributes( {
+	// 		features: [
+	// 			...features,
+	// 			{
+	// 				col_class: 'col-lg-4 col-md-6 col-12',
+	// 				col_style: 'padding:0px;',
+	// 				col_id: '',
+	// 				col_inner_class: 'd-flex align-items-center justify-content-md-center',
+	// 				col_inner_style: '',
+	// 				data_aos: 'fade-up',
+	// 				data_aos_delay: '',
+	// 				title: '',
+	// 				title_class: 'bold',
+	// 				title_style: '',
+	// 				content: '',
+	// 				code_block: '',
+	// 				col_img_class:'',
+	// 				col_img_style:'',
+	// 				img:'',
+	// 				img_class:'w-100',
+	// 				img_style:'height:200px;object-fit:cover;margin-bottom:-7px;'
+	// 			},
+	// 		],
+	// 	} );
+	// };
 
-	const updateFeature = ( featureIndex, field, value ) => {
-		setAttributes( {
-			features: features.map( ( feature, index ) => {
-				if ( index === featureIndex ) {
+	// const updateFeature = ( featureIndex, field, value ) => {
+	// 	setAttributes( {
+	// 		features: features.map( ( feature, index ) => {
+	// 			if ( index === featureIndex ) {
+	// 				return {
+	// 					...feature,
+	// 					[ field ]: value,
+	// 				};
+	// 			}
+	// 			return feature;
+	// 		} ),
+	// 	} );
+	// };
+
+	const updateFeature = (featureIndex, field, value) => {
+		setAttributes({
+			features: features.map((feature, index) => {
+				if (index === featureIndex) {
+					// Check if the value is an object (in case of multiple updates)
+					if (typeof value === 'object' && value !== null) {
+						return {
+							...feature,
+							...value, // Spread the object fields
+						};
+					}
 					return {
 						...feature,
-						[ field ]: value,
+						[field]: value, // Single field update
 					};
 				}
 				return feature;
-			} ),
-		} );
+			}),
+		});
 	};
 
 	return (
@@ -384,6 +438,8 @@ export default function Edit( { attributes, setAttributes } ) {
                             }
                             placeholder={__('')}
                         />
+
+
 						<div style={{ display: 'flex' }}>
                 <div style={{ paddingRight: '25px' }}>
                     <p style={{ marginBottom: '0px' }}>Title Class</p>
@@ -422,8 +478,117 @@ export default function Edit( { attributes, setAttributes } ) {
                 </div>
             </div>
 
+<div style={{ display: 'flex', paddingTop: '25px' }}>
+
+<div
+	style={{
+		display: 'flex',
+		width: '100%',
+		justifyContent: 'space-between',
+	}}
+>
+<div style={{ width: '49%' }}>
+<MediaUploadCheck>
+	<MediaUpload
+		onSelect={(media) =>
+			updateFeature(index, 'img', { img: media.url, alt: media.alt })
+		}
+		type="image"
+		allowedTypes={['image']}
+		value={feature.img}
+		render={({ open }) => (
+			<div>
+				{feature.img && (
+				<p className={``} style={{fontSize:'80%',lineHeight:'1.2'}}>{__('Alt Text:')} {feature.alt}</p>
+			)}
+				{feature.img && (
+					<Button
+						isLink
+						isDestructive
+						onClick={() => updateFeature(index, 'img', '')}
+					>
+						{__('Remove Col Image')}
+					</Button>
+				)}
+				<Button
+					onClick={open}
+					icon="upload"
+					className="editor-media-placeholder__button is-button is-default is-large"
+				>
+					{__('Select Col Image')}
+				</Button>
+			</div>
+		)}
+	/>
+</MediaUploadCheck>
+
+{ feature.img && (
+	<img
+		src={ feature.img }
+		style={ {
+			width: '400px',
+			height: '225px',
+			objectFit: 'cover',
+		} }
+	/>
+)}
+
+</div>
+
+<div>
+	<div style={{ display: 'flex' }}>
+                <div style={{ paddingRight: '25px' }}>
+                    <p style={{ marginBottom: '0px' }}>Col Img Class</p>
+                    <input
+                        type="text"
+                        value={feature.col_img_class}
+                        onChange={(content) =>
+                            updateFeature(index, 'col_img_class', content.target.value)
+                        }
+                    />
+                </div>
+                <div style={{ paddingRight: '24px' }}>
+                    <p style={{ marginBottom: '0px' }}>Col Img Style</p>
+                    <input
+                        type="text"
+                        value={feature.col_img_style}
+                        onChange={(content) =>
+                            updateFeature(index, 'col_img_style', content.target.value)
+                        }
+                    />
+                </div>
+				</div>
+	<div style={{ display: 'flex' }}>
+                <div style={{ paddingRight: '25px' }}>
+                    <p style={{ marginBottom: '0px' }}>Img Class</p>
+                    <input
+                        type="text"
+                        value={feature.img_class}
+                        onChange={(content) =>
+                            updateFeature(index, 'img_class', content.target.value)
+                        }
+                    />
+                </div>
+                <div style={{ paddingRight: '24px' }}>
+                    <p style={{ marginBottom: '0px' }}>Img Style</p>
+                    <input
+                        type="text"
+                        value={feature.img_style}
+                        onChange={(content) =>
+                            updateFeature(index, 'img_style', content.target.value)
+                        }
+                    />
+                </div>
+				</div>
+
+
+            </div>
+
+</div>
+</div>
+
             {/* Duplicate Button */}
-            <Button
+            {/* <Button
                 style={{ border: '1px solid', marginTop: '10px' }}
                 onClick={() => {
                     const newFeatures = [...features];
@@ -433,9 +598,9 @@ export default function Edit( { attributes, setAttributes } ) {
                 }}
             >
                 {__('Duplicate Feature')}
-            </Button>
+            </Button> */}
 
-            <Button
+            {/* <Button
                 style={{ border: '1px solid', marginTop: '10px' }}
                 onClick={() => {
                     const newFeatures = [...features];
@@ -453,9 +618,9 @@ export default function Edit( { attributes, setAttributes } ) {
                 }}
             >
                 {__('Add Feature Above')}
-            </Button>
+            </Button> */}
 
-            <Button
+            {/* <Button
                 style={{ border: '1px solid', marginTop: '10px' }}
                 isDestructive
                 onClick={() => {
@@ -465,7 +630,108 @@ export default function Edit( { attributes, setAttributes } ) {
                 }}
             >
                 {__('Remove Feature')}
-            </Button>
+            </Button> */}
+
+<Button
+    style={{
+		border:'1px solid',
+		background:'white'
+	}}
+	className={`button-hero`}
+    onClick={() => {
+        const newFeatures = [...features]; // Create a copy of the features array
+        const newColumn = createNewColumn();
+        newFeatures.splice(index, 0, newColumn); // Insert the new column at the current index
+        setAttributes({ features: newFeatures }); // Update the features attribute with the new array
+    }}
+>
+    {__('Add Column Above')}
+</Button>
+<Button
+    style={{
+		border:'1px solid',
+		background:'white'
+	}}
+	className={`button-hero`}
+    onClick={() => {
+        const newFeatures = [...features]; // Create a copy of the features array
+        const newColumn = createNewColumn();
+        newFeatures.splice(index + 1, 0, newColumn); // Insert the new column at the current index
+        setAttributes({ features: newFeatures }); // Update the features attribute with the new array
+    }}
+>
+    {__('Add Column Below')}
+</Button>
+{/* Duplicate Button */}
+<Button
+style={{
+	border:'1px solid',
+	background:'white'
+}}
+className={`button-hero`}
+onClick={() => {
+const newFeatures = [...features];
+const duplicateFeature = { ...feature }; // Copy the tab object
+newFeatures.splice(index + 1, 0, duplicateFeature); // Insert the copy after the current tab
+setAttributes({ features: newFeatures });
+}}
+>
+{__('Duplicate Column')}
+</Button>
+<Button
+style={{
+	border:'1px solid',
+	background:'peachpuff'
+}}
+className={`button-hero`}
+isDestructive
+onClick={() => {
+const newFeatures = [...features];
+newFeatures.splice(index, 1);
+setAttributes({ features: newFeatures });
+}}
+>
+{__('Remove Column')}
+</Button>
+{/* Move Up Button */}
+<Button
+style={{
+	border:'1px solid',
+	background:'white'
+}}
+className={`button-hero`}
+onClick={() => {
+	if (index === 0) return; // Prevent moving the first item up
+	const newFeatures = [...features];
+	const temp = newFeatures[index - 1];
+	newFeatures[index - 1] = newFeatures[index];
+	newFeatures[index] = temp;
+	setAttributes({ features: newFeatures });
+}}
+disabled={index === 0} // Disable if it's the first item
+>
+{__('Move Up')}
+</Button>
+
+{/* Move Down Button */}
+<Button
+style={{
+	border:'1px solid',
+	background:'white'
+}}
+className={`button-hero`}
+onClick={() => {
+	if (index === features.length - 1) return; // Prevent moving the last item down
+	const newFeatures = [...features];
+	const temp = newFeatures[index + 1];
+	newFeatures[index + 1] = newFeatures[index];
+	newFeatures[index] = temp;
+	setAttributes({ features: newFeatures });
+}}
+disabled={index === features.length - 1} // Disable if it's the last item
+>
+{__('Move Down')}
+</Button>
         </div>
     );
 })}

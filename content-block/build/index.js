@@ -237,11 +237,15 @@ function Edit({
       col_data_aos_delay: nextValue
     })
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)()
+    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)(),
+    style: {
+      position: 'relative',
+      overflow: 'hidden'
+    }
   }, section_image && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: section_image,
     alt: section_image_alt || 'Electrical Engineering Expert Witness'
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks, null)));
+  }), section_block && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.RawHTML, null, section_block), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks, null)));
 }
 
 /***/ }),

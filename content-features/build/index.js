@@ -79,31 +79,85 @@ function Edit({
     features
   } = attributes;
   const [value, setValue] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)('');
+  const createNewColumn = () => ({
+    col_class: 'col col-lg-4 col-md-6 col-12 bg-black text-white',
+    col_style: 'padding:0px;',
+    col_id: '',
+    col_inner_class: 'col-inner d-flex align-items-center justify-content-md-center',
+    col_inner_style: 'padding-top:15px;',
+    data_aos: 'fade-up',
+    data_aos_delay: '',
+    title: '',
+    title_class: 'bold',
+    title_style: '',
+    content: '',
+    code_block: '',
+    col_img_class: 'position-relative overflow-h',
+    col_img_style: 'border-top:4px solid white;border-right:2px solid white;',
+    img: '',
+    img_class: 'w-100',
+    img_style: 'height:200px;object-fit:cover;margin-bottom:-5px;'
+  });
   const addFeature = () => {
     setAttributes({
-      features: [...features, {
-        col_class: '',
-        col_style: '',
-        col_id: '',
-        col_inner_class: 'd-flex align-items-center justify-content-md-center',
-        col_inner_style: '',
-        data_aos: 'fade-up',
-        data_aos_delay: '',
-        title: '',
-        title_class: 'bold',
-        title_style: '',
-        content: '',
-        code_block: ''
-      }]
+      features: [...features, createNewColumn()]
     });
   };
+  // const addFeature = () => {
+  // 	setAttributes( {
+  // 		features: [
+  // 			...features,
+  // 			{
+  // 				col_class: 'col-lg-4 col-md-6 col-12',
+  // 				col_style: 'padding:0px;',
+  // 				col_id: '',
+  // 				col_inner_class: 'd-flex align-items-center justify-content-md-center',
+  // 				col_inner_style: '',
+  // 				data_aos: 'fade-up',
+  // 				data_aos_delay: '',
+  // 				title: '',
+  // 				title_class: 'bold',
+  // 				title_style: '',
+  // 				content: '',
+  // 				code_block: '',
+  // 				col_img_class:'',
+  // 				col_img_style:'',
+  // 				img:'',
+  // 				img_class:'w-100',
+  // 				img_style:'height:200px;object-fit:cover;margin-bottom:-7px;'
+  // 			},
+  // 		],
+  // 	} );
+  // };
+
+  // const updateFeature = ( featureIndex, field, value ) => {
+  // 	setAttributes( {
+  // 		features: features.map( ( feature, index ) => {
+  // 			if ( index === featureIndex ) {
+  // 				return {
+  // 					...feature,
+  // 					[ field ]: value,
+  // 				};
+  // 			}
+  // 			return feature;
+  // 		} ),
+  // 	} );
+  // };
+
   const updateFeature = (featureIndex, field, value) => {
     setAttributes({
       features: features.map((feature, index) => {
         if (index === featureIndex) {
+          // Check if the value is an object (in case of multiple updates)
+          if (typeof value === 'object' && value !== null) {
+            return {
+              ...feature,
+              ...value // Spread the object fields
+            };
+          }
           return {
             ...feature,
-            [field]: value
+            [field]: value // Single field update
           };
         }
         return feature;
@@ -478,49 +532,184 @@ function Edit({
                   })]
                 })]
               })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              style: {
+                display: 'flex',
+                paddingTop: '25px'
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                style: {
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'space-between'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                  style: {
+                    width: '49%'
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUploadCheck, {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+                      onSelect: media => updateFeature(index, 'img', {
+                        img: media.url,
+                        alt: media.alt
+                      }),
+                      type: "image",
+                      allowedTypes: ['image'],
+                      value: feature.img,
+                      render: ({
+                        open
+                      }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                        children: [feature.img && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+                          className: ``,
+                          style: {
+                            fontSize: '80%',
+                            lineHeight: '1.2'
+                          },
+                          children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Alt Text:'), " ", feature.alt]
+                        }), feature.img && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                          isLink: true,
+                          isDestructive: true,
+                          onClick: () => updateFeature(index, 'img', ''),
+                          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Remove Col Image')
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                          onClick: open,
+                          icon: "upload",
+                          className: "editor-media-placeholder__button is-button is-default is-large",
+                          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Select Col Image')
+                        })]
+                      })
+                    })
+                  }), feature.img && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+                    src: feature.img,
+                    style: {
+                      width: '400px',
+                      height: '225px',
+                      objectFit: 'cover'
+                    }
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                    style: {
+                      display: 'flex'
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                      style: {
+                        paddingRight: '25px'
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                        style: {
+                          marginBottom: '0px'
+                        },
+                        children: "Col Img Class"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                        type: "text",
+                        value: feature.col_img_class,
+                        onChange: content => updateFeature(index, 'col_img_class', content.target.value)
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                      style: {
+                        paddingRight: '24px'
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                        style: {
+                          marginBottom: '0px'
+                        },
+                        children: "Col Img Style"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                        type: "text",
+                        value: feature.col_img_style,
+                        onChange: content => updateFeature(index, 'col_img_style', content.target.value)
+                      })]
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                    style: {
+                      display: 'flex'
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                      style: {
+                        paddingRight: '25px'
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                        style: {
+                          marginBottom: '0px'
+                        },
+                        children: "Img Class"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                        type: "text",
+                        value: feature.img_class,
+                        onChange: content => updateFeature(index, 'img_class', content.target.value)
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                      style: {
+                        paddingRight: '24px'
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                        style: {
+                          marginBottom: '0px'
+                        },
+                        children: "Img Style"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                        type: "text",
+                        value: feature.img_style,
+                        onChange: content => updateFeature(index, 'img_style', content.target.value)
+                      })]
+                    })]
+                  })]
+                })]
+              })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
               style: {
                 border: '1px solid',
-                marginTop: '10px'
+                background: 'white'
               },
+              className: `button-hero`,
+              onClick: () => {
+                const newFeatures = [...features]; // Create a copy of the features array
+                const newColumn = createNewColumn();
+                newFeatures.splice(index, 0, newColumn); // Insert the new column at the current index
+                setAttributes({
+                  features: newFeatures
+                }); // Update the features attribute with the new array
+              },
+              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Add Column Above')
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              style: {
+                border: '1px solid',
+                background: 'white'
+              },
+              className: `button-hero`,
+              onClick: () => {
+                const newFeatures = [...features]; // Create a copy of the features array
+                const newColumn = createNewColumn();
+                newFeatures.splice(index + 1, 0, newColumn); // Insert the new column at the current index
+                setAttributes({
+                  features: newFeatures
+                }); // Update the features attribute with the new array
+              },
+              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Add Column Below')
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              style: {
+                border: '1px solid',
+                background: 'white'
+              },
+              className: `button-hero`,
               onClick: () => {
                 const newFeatures = [...features];
                 const duplicateFeature = {
                   ...feature
-                }; // Copy the feature object
-                newFeatures.splice(index + 1, 0, duplicateFeature); // Insert the copy after the current feature
+                }; // Copy the tab object
+                newFeatures.splice(index + 1, 0, duplicateFeature); // Insert the copy after the current tab
                 setAttributes({
                   features: newFeatures
                 });
               },
-              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Duplicate Feature')
+              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Duplicate Column')
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
               style: {
                 border: '1px solid',
-                marginTop: '10px'
+                background: 'peachpuff'
               },
-              onClick: () => {
-                const newFeatures = [...features];
-                const newColumn = {
-                  col_class: '',
-                  col_style: '',
-                  col_id: '',
-                  data_aos: 'fade-up',
-                  data_aos_delay: '',
-                  title: 'new column',
-                  content: 'new column content'
-                };
-                newFeatures.splice(index, 0, newColumn); // Insert the new column at the current index
-                setAttributes({
-                  features: newFeatures
-                });
-              },
-              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Add Feature Above')
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-              style: {
-                border: '1px solid',
-                marginTop: '10px'
-              },
+              className: `button-hero`,
               isDestructive: true,
               onClick: () => {
                 const newFeatures = [...features];
@@ -529,7 +718,45 @@ function Edit({
                   features: newFeatures
                 });
               },
-              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Remove Feature')
+              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Remove Column')
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              style: {
+                border: '1px solid',
+                background: 'white'
+              },
+              className: `button-hero`,
+              onClick: () => {
+                if (index === 0) return; // Prevent moving the first item up
+                const newFeatures = [...features];
+                const temp = newFeatures[index - 1];
+                newFeatures[index - 1] = newFeatures[index];
+                newFeatures[index] = temp;
+                setAttributes({
+                  features: newFeatures
+                });
+              },
+              disabled: index === 0 // Disable if it's the first item
+              ,
+              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Move Up')
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+              style: {
+                border: '1px solid',
+                background: 'white'
+              },
+              className: `button-hero`,
+              onClick: () => {
+                if (index === features.length - 1) return; // Prevent moving the last item down
+                const newFeatures = [...features];
+                const temp = newFeatures[index + 1];
+                newFeatures[index + 1] = newFeatures[index];
+                newFeatures[index] = temp;
+                setAttributes({
+                  features: newFeatures
+                });
+              },
+              disabled: index === features.length - 1 // Disable if it's the last item
+              ,
+              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Move Down')
             })]
           });
         })
@@ -658,16 +885,16 @@ function save({
           children: attributes.features.map((feature, index) => {
             return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
               className: `position-relative text-center ${feature.col_class}`,
-              style: `padding:15px;${feature.col_style}`,
+              style: `${feature.col_style}`,
               "data-aos": feature.data_aos,
               "data-aos-delay": feature.data_aos_delay,
               "data-aos-offset": "0",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                 className: ``,
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                   className: `${feature.col_inner_class}`,
                   style: `${feature.col_inner_style}`,
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                  children: [feature.code_block && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                     className: `d-flex align-items-center justify-content-center`,
                     style: `min-width:35px;height:35px;background:white;border-radius:50%;margin-right:10px;padding: 7px;`,
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.RawHTML, {
@@ -684,7 +911,18 @@ function save({
                       children: feature.content
                     })]
                   })]
-                })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                  className: feature.col_img_class,
+                  style: feature.col_img_style,
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                    className: `overlay`
+                  }), feature.img && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                    src: feature.img,
+                    alt: feature.alt,
+                    style: feature.img_style,
+                    class: feature.img_class
+                  })]
+                })]
               })
             });
           })
@@ -786,7 +1024,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/content-features","version":"0.1.0","title":"Content Features","category":"widgets","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"supports":{"html":false},"attributes":{"section_style":{"type":"string","default":""},"section_class":{"type":"string","default":""},"section_id":{"type":"string","default":""},"section_image":{"type":"string","default":null},"section_image_class":{"type":"string"},"section_image_style":{"type":"string"},"section_block":{"type":"string","default":""},"container_style":{"type":"string","default":""},"container_class":{"type":"string","default":"container"},"container_id":{"type":"string","default":""},"row_style":{"type":"string","default":""},"row_class":{"type":"string","default":"row justify-content-center"},"row_id":{"type":"string","default":""},"features":{"type":"array","items":{"type":"object"},"default":[{"col_class":"","col_style":"","col_id":"","data_aos":"","data_aos_delay":"","name":"","content":""}]}},"textdomain":"content-features","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/content-features","version":"0.1.0","title":"Content Features","category":"widgets","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"supports":{"html":false},"attributes":{"section_style":{"type":"string","default":""},"section_class":{"type":"string","default":""},"section_id":{"type":"string","default":""},"section_image":{"type":"string","default":null},"section_image_class":{"type":"string"},"section_image_style":{"type":"string"},"section_block":{"type":"string","default":""},"container_style":{"type":"string","default":""},"container_class":{"type":"string","default":"container-fluid"},"container_id":{"type":"string","default":""},"row_style":{"type":"string","default":""},"row_class":{"type":"string","default":"row justify-content-center"},"row_id":{"type":"string","default":""},"features":{"type":"array","items":{"type":"object"},"default":[{"col_class":"col-lg-4 col-md-6 col-12","col_style":"","col_id":"","col_inner_class":"d-flex align-items-center justify-content-md-center","data_aos":"fade-up","data_aos_delay":"","name":"","content":"","img":"","img_class":"","img_style":""}]}},"textdomain":"content-features","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ })
 
